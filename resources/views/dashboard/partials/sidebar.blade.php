@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <h1 class="navbar-brand navbar-brand-autodark mt-lg-2">
-      <a href="{{ route('dashboard.home.index') }}">
+      <a href="{{ route('admin.dashboard.home.index') }}">
         PTI23 Page App
       </a>
     </h1>
@@ -57,8 +57,8 @@
     </div>
     <div class="collapse navbar-collapse" id="sidebar-menu">
       <ul class="navbar-nav pt-lg-3">
-        <li class="nav-item {{ Request::is('dashboard/home*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('dashboard.home.index') }}">
+        <li class="nav-item {{ Request::is('admin/dashboard/home*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('admin.dashboard.home.index') }}">
             <span class="nav-link-icon d-lg-inline-block">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                 stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -70,6 +70,26 @@
             </span>
             <span class="nav-link-title">
               Beranda
+            </span>
+          </a>
+        </li>
+        <li class="nav-item {{ Request::is('admin/dashboard/organizations*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('admin.dashboard.organizations.index') }}">
+            <span class="nav-link-icon d-lg-inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+              </svg>
+            </span>
+            <span class="nav-link-title">
+              Organisasi
             </span>
           </a>
         </li>

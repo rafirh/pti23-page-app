@@ -12,13 +12,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    protected function storeImage($file, $folder, $isUpdate = false) {
+    protected function storeImage($file, $folder, $quality = 75, $width = 1024)
+    {
         if (!Storage::exists('public/' . $folder)) {
             Storage::makeDirectory('public/' . $folder);
         }
         $tempPath = $file->store('temp');
         $fileName = explode('.', last(explode('/', $tempPath)))[0] . '.jpg';
-        $this->compressAndStoreImage(storage_path('app/' . $tempPath), storage_path('app/public/' . $folder . '/' . $fileName), 75, $isUpdate);
+        $this->compressAndStoreImage(storage_path('app/' . $tempPath), storage_path('app/public/' . $folder . '/' . $fileName), $quality, $width);
         Storage::delete($tempPath);
         return env('APP_URL') . Storage::url('public/' . $folder . '/' . $fileName);
     }
@@ -75,15 +76,11 @@ class Controller extends BaseController
         return $default;
     }
 
-    protected function compressAndStoreImage($filePath, $destination, $quality = 75, $isUpdate = false) {
+    protected function compressAndStoreImage($filePath, $destination, $quality = 75, $width = 1024)
+    {
         $image = Image::make($filePath);
         $image->orientate();
-
-        if ($image->mime() == 'image/png' || $isUpdate) {
-            $quality = 100;
-        }
-
-        $image->resize(1024, null, function ($constraint) {
+        $image->resize($width, null, function ($constraint) {
             $constraint->aspectRatio();
         });
         $image->save($destination, $quality);

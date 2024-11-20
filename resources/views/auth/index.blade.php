@@ -93,7 +93,7 @@
             </div>
           </form>
         </div>
-        <div class="hr-text">Or</div>
+        <div class="hr-text">Atau</div>
         <div class="card-body">
           <div class="row">
             <div class="col">

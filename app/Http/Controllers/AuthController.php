@@ -9,29 +9,36 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
-class AuthController extends Controller {
-    public function index() {
+class AuthController extends Controller
+{
+    public function index()
+    {
         return view('auth.index');
     }
 
-    public function authenticate(LoginRequest $request) {
+    public function authenticate(LoginRequest $request)
+    {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->remember_me ?? false)) {
-            return redirect()->route('dashboard.home.index');
+            if (Auth::user()->role == 'admin') {
+                return redirect()->route('admin.dashboard.home.index');
+            }
         }
 
         return redirect()->back()->withInput($request->only('email', 'password', 'remember_me'))->with('error', 'Email or password is incorrect');
     }
 
-    public function redirectToGoogle() {
+    public function redirectToGoogle()
+    {
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback() {
+    public function handleGoogleCallback()
+    {
         $googleUser = Socialite::driver('google')->stateless()->user();
         $user = User::where('email', $googleUser->email)->first();
-    
+
         if (!$user) {
             return redirect()
                 ->route('auth.index')
@@ -40,21 +47,24 @@ class AuthController extends Controller {
 
         Auth::login($user);
 
-        return redirect()->route('dashboard.home.index');
+        return redirect()->route('admin.dashboard.home.index');
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('auth.index');
     }
 
-    public function changePassword() {
+    public function changePassword()
+    {
         return view('auth.change-password', [
             'title' => 'Ubah Kata Sandi'
         ]);
     }
 
-    public function updatePassword(UpdatePasswordRequest $request) {
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
         $user = User::find(Auth::user()->id);
 
         if (!Auth::attempt(['email' => $user->email, 'password' => $request->current_password])) {
