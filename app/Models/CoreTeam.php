@@ -14,11 +14,13 @@ class CoreTeam extends Model
     protected $fillable = [
         'position',
         'order',
+        'student_id',
     ];
 
     protected $fields = [
         'position',
         'order',
+        'student_id',
     ];
 
     static $sortables = [

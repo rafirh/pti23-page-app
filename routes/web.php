@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard', 'as' => 'dashboar
 });
 
 Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin/dashboard', 'as' => 'admin.dashboard.'], function () {
+    Route::redirect('/', '/admin/dashboard/home');
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
     Route::resource('organizations', OrganizationController::class)->except('show', 'create');
     Route::resource('lecturers', LecturerController::class)->except('show', 'create');
