@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('lecturer_id')->nullable()->unsigned();
             $table->string('name');
             $table->string('nim');
             $table->date('birth_date');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
             $table->string('photo_url')->nullable();
+            $table->foreign('lecturer_id')->references('id')->on('lecturers')->onDelete('set null');
             $table->timestamps();
         });
     }

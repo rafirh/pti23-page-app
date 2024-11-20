@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('core_teams', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('student_id')->nullable()->unsigned();
             $table->string('position');
             $table->integer('order');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
             $table->timestamps();
         });
     }
