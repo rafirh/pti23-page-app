@@ -14,10 +14,14 @@
           <h2 class="page-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="icon icon-tabler icons-tabler-outline icon-tabler-bell">
+              class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-              <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+              <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+              <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+              <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
             </svg>
             Ubah Organisasi
           </h2>
@@ -31,11 +35,12 @@
     <div class="container-xl">
       <div class="row row-deck row-cards justify-content-center">
         <div class="col-md-6">
-          <form action="{{ route('admin.dashboard.organizations.update', $organization->id) }}" class="card" method="POST"
-            enctype="multipart/form-data">
+          <form action="{{ route('admin.dashboard.organizations.update', $organization->id) }}" class="card"
+            method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <input type="hidden" name="previous_url" value="{{ getPreviousUrl(route('admin.dashboard.organizations.index')) }}">
+            <input type="hidden" name="previous_url"
+              value="{{ getPreviousUrl(route('admin.dashboard.organizations.index')) }}">
             <div class="card-body">
               <div class="row mb-3">
                 <div class="col">
