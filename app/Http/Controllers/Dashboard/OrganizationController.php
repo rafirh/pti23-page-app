@@ -14,7 +14,8 @@ class OrganizationController extends Controller
     {
         return view('dashboard.organizations.index', [
             'title' => 'Daftar Organisasi',
-            'organizations' => Organization::options(request(Organization::$allowedParams))
+            'organizations' => Organization::withCount('students')
+                ->options(request(Organization::$allowedParams))
                 ->paginate($this->validateAndGetLimit(request('limit'), 10)),
             'sortables' => Organization::$sortables,
             'allowedParams' => Organization::$allowedParams,

@@ -129,6 +129,7 @@
                     <th>Logo</th>
                     <th>Nama</th>
                     <th>Deskripsi</th>
+                    <th>Jumlah Anggota</th>
                     <th>Waktu Ditambahkan</th>
                     <th class="text-center">Opsi</th>
                   </tr>
@@ -151,6 +152,11 @@
                       <td class="text-muted">
                         <span {{ add_title_tooltip($organization->description ?? '-', 50) }}>
                           {{ mb_strimwidth($organization->description ?? '-', 0, 50, '...') }}
+                        </span>
+                      </td>
+                      <td class="text-muted">
+                        <span class="badge badge-outline text-blue">
+                          {{ $organization->students_count }}
                         </span>
                       </td>
                       <td class="text-muted">
