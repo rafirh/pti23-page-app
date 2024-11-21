@@ -10,7 +10,7 @@
       transition: 0.3s;
     }
 
-    .org-logo:hover {
+    .user-photo:hover {
       opacity: 0.8;
       transition: 0.3s;
       cursor: pointer;
@@ -27,21 +27,19 @@
           <h3 class="page-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+              class="icon icon-tabler icons-tabler-outline icon-tabler-users">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-              <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-              <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-              <path d="M17 10h2a2 2 0 0 1 2 2v1" />
-              <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-              <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+              <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+              <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
             </svg>
             {{ $title }}
           </h3>
           <div class="text-muted mt-1">
-            {{ $organizations->firstItem() ?? '0' }}-{{ $organizations->lastItem() ?? '0' }} dari
-            {{ $organizations->total() }}
-            organisasi
+            {{ $students->firstItem() ?? '0' }}-{{ $students->lastItem() ?? '0' }} dari
+            {{ $students->total() }}
+            mahasiswa
           </div>
         </div>
         <div class="col-auto ms-auto d-print-none">
@@ -55,10 +53,10 @@
                 <path d="M12 5l0 14"></path>
                 <path d="M5 12l14 0"></path>
               </svg>
-              Tambah Organisasi
+              Tambah Mahasiswa
             </a>
             <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modalAdd"
-              aria-label="Tambah organisasi">
+              aria-label="Tambah mahasiswa">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -97,7 +95,7 @@
         </div>
         <div class="col-auto mt-3">
           @if (isParamsExist($allowedParams))
-            <a href="{{ route('admin.dashboard.organizations.index') }}" class="btn btn-outline-danger btn-icon"
+            <a href="{{ route('admin.dashboard.students.index') }}" class="btn btn-outline-danger btn-icon"
               data-bs-toggle="tooltip" data-bs-original-title="Bersihkan filter pencarian" data-bs-placement="bottom">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x" width="24"
                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -126,47 +124,94 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Logo</th>
+                    <th>NIM</th>
                     <th>Nama</th>
-                    <th>Deskripsi</th>
-                    <th>Waktu Ditambahkan</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Dosen PA</th>
+                    <th>Telepon</th>
+                    <th>Email</th>
                     <th class="text-center">Opsi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($organizations as $organization)
+                  @foreach ($students as $student)
                     <tr>
-                      <td class="text-muted">{{ $loop->iteration + $organizations->firstItem() - 1 }}</td>
+                      <td class="text-muted">{{ $loop->iteration + $students->firstItem() - 1 }}</td>
+                      <td class="text-muted">{{ $student->nim }}</td>
                       <td>
-                        <span class="avatar me-2 org-logo cursor-pointer"
-                          style="background-image: url({{ $organization->logo ?? asset('img/placeholder.jpeg') }})"
-                          onclick="showModalPhoto('{{ $organization->logo ?? asset('img/placeholder.jpeg') }}', '{{ $organization->name }}')">
-                        </span>
-                      </td>
-                      <td class="text-muted">
-                        <span {{ add_title_tooltip($organization->name ?? '-', 30) }}>
-                          {{ mb_strimwidth($organization->name ?? '-', 0, 30, '...') }}
-                        </span>
-                      </td>
-                      <td class="text-muted">
-                        <span {{ add_title_tooltip($organization->description ?? '-', 50) }}>
-                          {{ mb_strimwidth($organization->description ?? '-', 0, 50, '...') }}
-                        </span>
+                        <div class="d-flex py-1 align-items-center">
+                          <a class="avatar me-2 img-preview cursor-pointer" data-fslightbox="user-{{ $student->id }}"
+                            href="{{ $student->photo_url ?? asset('img/default.jpg') }}"
+                            style="background-image: url({{ $student->photo_url ?? asset('img/default.jpg') }})">
+                          </a>
+                          <div class="flex-fill">
+                            <div>
+                              <span class="font-weight-medium" {{ add_title_tooltip($student->name ?? '-', 24) }}>
+                                {{ mb_strimwidth($student->name, 0, 24, '...') }}
+                              </span>
+                            </div>
+                            <div>
+                              <span class="text-muted" {{ add_title_tooltip($student->email ?? '-', 24) }}>
+                                {{ mb_strimwidth($student->email, 0, 24, '...') }}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </td>
                       <td class="text-muted">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-time">
+                          class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-                          <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                          <path d="M15 3v4" />
-                          <path d="M7 3v4" />
-                          <path d="M3 11h16" />
-                          <path d="M18 16.496v1.504l1 1" />
+                          <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                          <path d="M16 3l0 4" />
+                          <path d="M8 3l0 4" />
+                          <path d="M4 11l16 0" />
+                          <path d="M8 15h2v2h-2z" />
                         </svg>
-                        {{ formatDate($organization->created_at, 'd F Y H:i') }}
+                        {{ formatDate($student->birth_date, 'd F Y') }}
+                      </td>
+                      <td class="text-muted">
+                        <span {{ add_title_tooltip($student->lecturer->name ?? '-', 30) }}>
+                          {{ mb_strimwidth($student->lecturer->name ?? '-', 0, 30, '...') }}
+                        </span>
+                      </td>
+                      <td class="text-muted">
+                        @if ($student->phone)
+                          <a href="{{ getWhatsAppLink($student->phone) }}" target="_blank"
+                            class="text-decoration-none text-reset" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Hubungi via WhatsApp">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp"
+                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                              stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                              <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
+                              <path
+                                d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1">
+                              </path>
+                            </svg>
+                            {{ $student->phone }}
+                          </a>
+                        @else
+                          -
+                        @endif
+                      </td>
+                      <td class="text-muted">
+                        @if ($student->email)
+                          <a href="mailto:{{ $student->email }}" class="text-decoration-none text-reset">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                              <path d="M3 7l9 6l9 -6" />
+                            </svg>
+                            {{ $student->email }}
+                          </a>
+                        @else
+                          -
+                        @endif
                       </td>
                       <td>
                         <div class="d-flex justify-content-center">
@@ -185,8 +230,7 @@
                             </svg>
                           </button>
                           <div class="text-muted dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item"
-                              href="{{ route('admin.dashboard.organizations.edit', $organization->id) }}">
+                            <a class="dropdown-item" href="{{ route('admin.dashboard.students.edit', $student->id) }}">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit me-2"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -201,7 +245,7 @@
                               Ubah
                             </a>
                             <button class="dropdown-item btn-action-delete"
-                              data-action="{{ route('admin.dashboard.organizations.destroy', $organization->id) }}"
+                              data-action="{{ route('admin.dashboard.students.destroy', $student->id) }}"
                               data-bs-toggle="modal" data-bs-target="#modalDelete">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler me-2" width="24"
                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -220,21 +264,20 @@
                       </td>
                     </tr>
                   @endforeach
-                  @if ($organizations->count() == 0)
+                  @if ($students->count() == 0)
                     <tr class="text-center">
                       <td colspan="99">
                         <div class="empty bg-transparent" style="height: 500px;">
                           <div class="empty-img"><img src="{{ asset('img\error\undraw_quitting_time_dm8t.svg') }}"
                               height="128">
                           </div>
-                          <p class="empty-title">Organisasi tidak ditemukan</p>
+                          <p class="empty-title">Mahasiswa tidak ditemukan</p>
                           <p class="empty-subtitle text-muted">
                             Coba sesuaikan pencarian atau filter untuk menemukan apa yang anda
                             cari.
                           </p>
                           <div class="empty-action">
-                            <a href="{{ route('admin.dashboard.organizations.index') }}"
-                              class="btn btn-outline-danger">
+                            <a href="{{ route('admin.dashboard.students.index') }}" class="btn btn-outline-danger">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="1"
                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -254,9 +297,9 @@
                 </tbody>
               </table>
             </div>
-            @if ($organizations->perPage() < $organizations->total())
+            @if ($students->perPage() < $students->total())
               <div class="mt-3 ms-3">
-                {{ $organizations->withQueryString()->onEachSide(1)->links('pagination.custom') }}
+                {{ $students->withQueryString()->onEachSide(1)->links('pagination.custom') }}
               </div>
             @endif
           </div>
@@ -416,22 +459,31 @@
   </div>
 
   {{-- Modal add --}}
-  <div class="modal modal-blur fade" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Tambah Organisasi</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="{{ route('admin.dashboard.organizations.store') }}" method="post"
-          enctype="multipart/form-data">
-          @csrf
+  <form action="{{ route('admin.dashboard.students.store') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="modal modal-blur fade" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tambah Mahasiwa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
           <div class="modal-body">
             <div class="row mb-3">
-              <div class="col">
+              <div class="col-md-6">
+                <label class="form-label required">NIM</label>
+                <input type="text" class="form-control @error('nim') is-invalid @enderror" name="nim"
+                  placeholder="Masukkan NIM mahasiswa" value="{{ old('nim') }}" />
+                @error('nim')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-6">
                 <label class="form-label required">Nama</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                  placeholder="Masukkan nama organisasi" value="{{ old('name') }}" />
+                  placeholder="Masukkan nama mahasiswa" value="{{ old('name') }}" />
                 @error('name')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -440,11 +492,66 @@
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col">
-                <label class="form-label">Deskripsi</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" name="description"
-                  placeholder="Deskripsi organisasi" rows="3">{{ old('description') }}</textarea>
-                @error('description')
+              <div class="col-md-6">
+                <div class="form-label required">Tanggal Lahir</div>
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                      viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <rect x="4" y="5" width="16" height="16" rx="2" />
+                      <line x1="16" y1="3" x2="16" y2="7" />
+                      <line x1="8" y1="3" x2="8" y2="7" />
+                      <line x1="4" y1="11" x2="20" y2="11" />
+                      <line x1="11" y1="15" x2="12" y2="15" />
+                      <line x1="12" y1="15" x2="12" y2="18" />
+                    </svg>
+                  </span>
+                  <input class="form-control @error('birth_date') is-invalid @enderror" name="birth_date"
+                    placeholder="Tanggal lahir" id="date-input" value="{{ old('birth_date') ?? '2005-01-01' }}"
+                    autocomplete="off">
+                </div>
+                @error('birth_date')
+                  <div class="text-danger fs-5 mt-1">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-6">
+                <label class="form-label required">Dosen PA</label>
+                <select type="text" class="form-select @error('lecturer_id') is-invalid @enderror"
+                  id="select-lecturer" name="lecturer_id">
+                  <option value="" disabled selected>Pilih dosen PA</option>
+                  @foreach ($lecturers as $lecturer)
+                    <option value="{{ $lecturer->id }}" {{ old('lecturer_id') == $lecturer->id ? 'selected' : '' }}>
+                      {{ $lecturer->name }}
+                    </option>
+                  @endforeach
+                </select>
+                @error('lecturer_id')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Telepon</label>
+                <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
+                  placeholder="Masukkan telepon mahasiswa" value="{{ old('phone') }}" />
+                @error('phone')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email"
+                  placeholder="Masukkan email mahasiswa" value="{{ old('email') }}" />
+                @error('email')
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
@@ -453,15 +560,90 @@
             </div>
             <div class="row mb-3">
               <div class="col">
-                <label class="form-label">Logo</label>
-                <input name="logo" class="filepond" type="file" accept="image/*">
-                @error('logo')
+                <label class="form-label">Organisasi</label>
+                <div>
+                  @foreach ($organizations as $organization)
+                    <label class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="organization_ids[]"
+                        value="{{ $organization->id }}" {{ in_array($organization->id, old('organization_ids', [])) ? 'checked' : '' }}>
+                      <span class="form-check-label">{{ $organization->name }}</span>
+                    </label>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col=12">
+                <label class="form-label">Sosial Media</label>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <img src="{{ asset('img/sosmed/linkedin.svg') }}" alt="Linkedin">
+                  </span>
+                  <input type="text" class="form-control @error('linkedin_url') is-invalid @enderror"
+                    placeholder="Tautan linkedin" name="linkedin_url" value="{{ old('linkedin_url') }}">
+                </div>
+                @error('linkedin_url')
+                  <span class="text-danger fs-5">
+                    {{ $message }}
+                  </span>
+                @enderror
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <img src="{{ asset('img/sosmed/instagram.svg') }}" alt="Instagram">
+                  </span>
+                  <input type="text" class="form-control @error('instagram_url') is-invalid @enderror"
+                    placeholder="Tautan instagram" name="instagram_url" value="{{ old('instagram_url') }}">
+                </div>
+                @error('instagram_url')
+                  <span class="text-danger fs-5">
+                    {{ $message }}
+                  </span>
+                @enderror
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <img src="{{ asset('img/sosmed/github.svg') }}" alt="Github" style="width: 20px;">
+                  </span>
+                  <input type="text" class="form-control @error('github_url') is-invalid @enderror"
+                    placeholder="Tautan github" name="github_url" value={{ old('github_url') }}>
+                </div>
+                @error('github_url')
+                  <span class="text-danger fs-5">
+                    {{ $message }}
+                  </span>
+                @enderror
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <img src="{{ asset('img/sosmed/twitter.svg') }}" alt="Twitter" style="width: 20px;">
+                  </span>
+                  <input type="text" class="form-control @error('twitter_url') is-invalid @enderror"
+                    placeholder="Tautan twitter" name="twitter_url" value={{ old('facebook_url') }}>
+                </div>
+                @error('twitter_url')
+                  <span class="text-danger fs-5">
+                    {{ $message }}
+                  </span>
+                @enderror
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label">Foto</label>
+                <input name="photo" class="filepond" type="file" accept="image/*">
+                @error('photo')
                   <div class="text-danger fs-5 d-block">{{ $message }}</div>
                 @enderror
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer pt-2" style="border-top: 1px solid #e9ecef;">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
@@ -474,10 +656,10 @@
               Simpan
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 
   {{-- Modal photo --}}
   <div class="modal modal-blur fade" id="modalPhoto" tabindex="-1" role="dialog" aria-hidden="true">
@@ -491,6 +673,8 @@
 @endsection
 
 @section('library-js')
+  <script src="{{ asset('plugins/tabler/dist/libs/fslightbox/index.js') }}" defer></script>
+  <script src="{{ asset('plugins/tabler/dist/libs/litepicker/dist/litepicker.js?1669759017') }}"></script>
   <script src="{{ asset('plugins/filepond/filepond.js') }}"></script>
   <script src="{{ asset('plugins/filepond/filepond-plugin-image-preview.js') }}"></script>
   <script src="{{ asset('plugins/filepond/filepond-plugin-file-validate-type.js') }}"></script>
@@ -547,6 +731,17 @@
       acceptedFileTypes: ['image/*'],
       labelFileTypeNotAllowed: 'File type not allowed',
       storeAsFile: true,
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var el;
+      window.Litepicker && (new Litepicker({
+        element: document.getElementById('date-input'),
+        buttonText: {
+          previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>`,
+          nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>`,
+        },
+      }));
     });
   </script>
 @endsection

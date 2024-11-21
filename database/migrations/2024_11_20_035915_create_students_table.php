@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('instagram')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
+            $table->string('twitter')->nullable();
             $table->string('photo_url')->nullable();
             $table->foreign('lecturer_id')->references('id')->on('lecturers')->onDelete('set null');
             $table->timestamps();

@@ -1,8 +1,8 @@
 @extends('dashboard.main')
 
 @section('custom-css')
-  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-  <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+  <link href="{{ asset('plugins/filepond/filepond.css') }}" rel="stylesheet">
+  <link href="{{ asset('plugins/filepond/filepond-plugin-image-preview.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -88,9 +88,9 @@
 @endsection
 
 @section('library-js')
-  <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-  <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-  <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+  <script src="{{ asset('plugins/filepond/filepond.js') }}"></script>
+  <script src="{{ asset('plugins/filepond/filepond-plugin-image-preview.js') }}"></script>
+  <script src="{{ asset('plugins/filepond/filepond-plugin-file-validate-type.js') }}"></script>
 @endsection
 
 @section('custom-js')

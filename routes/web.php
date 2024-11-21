@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\LecturerController;
 use App\Http\Controllers\Dashboard\OrganizationController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin/dashboa
     Route::resource('organizations', OrganizationController::class)->except('show', 'create');
     Route::resource('lecturers', LecturerController::class)->except('show', 'create');
     Route::resource('core-teams', CoreTeamController::class)->except('show', 'create');
+    Route::resource('students', StudentController::class)->except('create');
 });
 
 Route::group(['middleware' => ['auth', 'role:student'], 'prefix' => 'student/dashboard', 'as' => 'student.dashboard.'], function () {
