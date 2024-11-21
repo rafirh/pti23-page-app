@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dashboard\AchievementController;
 use App\Http\Controllers\Dashboard\CoreTeamController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\LecturerController;
@@ -44,6 +45,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin/dashboa
     Route::resource('lecturers', LecturerController::class)->except('show', 'create');
     Route::resource('core-teams', CoreTeamController::class)->except('show', 'create');
     Route::resource('students', StudentController::class)->except('create');
+    Route::resource('achievements', AchievementController::class)->except('show', 'create');
 });
 
 Route::group(['middleware' => ['auth', 'role:student'], 'prefix' => 'student/dashboard', 'as' => 'student.dashboard.'], function () {

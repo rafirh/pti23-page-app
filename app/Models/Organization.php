@@ -57,4 +57,9 @@ class Organization extends Model
 
         return $query;
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'student_organization_pivot', 'organization_id', 'student_id');
+    }
 }

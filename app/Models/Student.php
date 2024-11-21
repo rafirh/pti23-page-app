@@ -96,4 +96,9 @@ class Student extends Model
     {
         return $this->belongsToMany(Organization::class, 'student_organization_pivot', 'student_id', 'organization_id');
     }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class, 'student_id');
+    }
 }

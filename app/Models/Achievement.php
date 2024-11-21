@@ -5,28 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lecturer extends Model
+class Achievement extends Model
 {
     use HasFactory;
 
-    protected $table = 'lecturers';
+    protected $table = 'achievements';
 
     protected $fillable = [
         'name',
-        'email',
-        'phone',
+        'date_awarded',
+        'student_id',
     ];
 
     protected $fields = [
         'name',
-        'email',
-        'phone',
+        'date_awarded',
+        'student_id',
     ];
 
     static $sortables = [
         'name' => 'Nama',
-        'email' => 'Email',
-        'phone' => 'Telepon',
+        'date_awarded' => 'Tanggal Diberikan',
+        'created_at' => 'Waktu Dibuat',
+        'updated_at' => 'Waktu Diperbarui',
     ];
 
     static $allowedParams = [
@@ -40,8 +41,9 @@ class Lecturer extends Model
         if (isset($options['q'])) {
             $query->where(function ($query) use ($options) {
                 $query->where('name', 'like', '%' . $options['q'] . '%')
-                    ->orWhere('email', 'like', '%' . $options['q'] . '%')
-                    ->orWhere('phone', 'like', '%' . $options['q'] . '%');
+                    ->orWhereHas('student', function ($query) use ($options) {
+                        $query->where('name', 'like', '%' . $options['q'] . '%');
+                    });
             });
         }
 
@@ -57,8 +59,8 @@ class Lecturer extends Model
         return $query;
     }
 
-    public function students()
+    public function student()
     {
-        return $this->hasMany(Student::class, 'lecturer_id');
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }
