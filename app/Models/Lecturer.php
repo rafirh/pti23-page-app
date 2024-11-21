@@ -21,12 +21,16 @@ class Lecturer extends Model
         'name',
         'email',
         'phone',
+        'created_at',
+        'updated_at',
     ];
 
     static $sortables = [
         'name' => 'Nama',
         'email' => 'Email',
         'phone' => 'Telepon',
+        'created_at' => 'Waktu dibuat',
+        'updated_at' => 'Waktu diperbarui',
     ];
 
     static $allowedParams = [

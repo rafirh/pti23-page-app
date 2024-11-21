@@ -5,27 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CoreTeam extends Model
+class WorkingProgram extends Model
 {
     use HasFactory;
 
-    protected $table = 'core_teams';
+    protected $table = 'working_programs';
 
     protected $fillable = [
-        'position',
-        'order',
-        'student_id',
+        'core_team_id',
+        'name',
+        'description',
     ];
 
     protected $fields = [
-        'position',
-        'order',
-        'student_id',
+        'core_team_id',
+        'name',
+        'description',
+        'created_at',
+        'updated_at',
     ];
 
     static $sortables = [
-        'position' => 'Divisi',
-        'order' => 'Urutan',
+        'name' => 'Nama',
+        'description' => 'Deskripsi',
+        'created_at' => 'Waktu dibuat',
+        'updated_at' => 'Waktu diperbarui',
     ];
 
     static $allowedParams = [
@@ -38,7 +42,11 @@ class CoreTeam extends Model
     {
         if (isset($options['q'])) {
             $query->where(function ($query) use ($options) {
-                $query->where('position', 'like', '%' . $options['q'] . '%');
+                $query->where('name', 'like', '%' . $options['q'] . '%')
+                    ->orWhere('description', 'like', '%' . $options['q'] . '%')
+                    ->orWhereHas('coreTeam', function ($query) use ($options) {
+                        $query->where('position', 'like', '%' . $options['q'] . '%');
+                    });
             });
         }
 
@@ -54,13 +62,8 @@ class CoreTeam extends Model
         return $query;
     }
 
-    public function student()
+    public function coreTeam()
     {
-        return $this->belongsTo(Student::class);
-    }
-
-    public function workingPrograms()
-    {
-        return $this->hasMany(WorkingProgram::class);
+        return $this->belongsTo(CoreTeam::class, 'core_team_id');
     }
 }

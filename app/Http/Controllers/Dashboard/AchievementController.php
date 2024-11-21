@@ -35,7 +35,7 @@ class AchievementController extends Controller
     {
         return view('dashboard.achievements.edit', [
             'title' => 'Ubah Prestasi',
-            'Achievement' => $achievement,
+            'achievement' => $achievement,
         ]);
     }
 
