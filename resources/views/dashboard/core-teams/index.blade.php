@@ -126,8 +126,9 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Urutan</th>
+                    <th>Mahasiswa</th>
                     <th>Divisi</th>
+                    <th>Urutan</th>
                     <th>Waktu Ditambahkan</th>
                     <th class="text-center">Opsi</th>
                   </tr>
@@ -136,12 +137,17 @@
                   @foreach ($coreTeams as $coreTeam)
                     <tr>
                       <td class="text-muted">{{ $loop->iteration + $coreTeams->firstItem() - 1 }}</td>
-                      <td class="text-muted">{{ $coreTeam->order }}</td>
+                      <td class="text-muted">
+                        <span {{ add_title_tooltip($coreTeam->student->name ?? '-', 30) }}>
+                          {{ mb_strimwidth($coreTeam->student->name ?? '-', 0, 30, '...') }}
+                        </span>
+                      </td>
                       <td class="text-muted">
                         <span {{ add_title_tooltip($coreTeam->position ?? '-', 30) }}>
                           {{ mb_strimwidth($coreTeam->position ?? '-', 0, 30, '...') }}
                         </span>
                       </td>
+                      <td class="text-muted">{{ $coreTeam->order }}</td>
                       <td class="text-muted">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -414,6 +420,24 @@
         <form action="{{ route('admin.dashboard.core-teams.store') }}" method="post" enctype="multipart/form-data">
           @csrf
           <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label required">Mahasiswa</label>
+                <select class="form-select @error('student_id') is-invalid @enderror" name="student_id">
+                  <option value="" disabled selected>Pilih</option>
+                  @foreach ($students as $student)
+                    <option value="{{ $student->id }}" {{ old('student_id') == $student->id ? 'selected' : '' }}>
+                      {{ $student->name }}
+                    </option>
+                  @endforeach
+                </select>
+                @error('student_id')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+            </div>
             <div class="row mb-3">
               <div class="col">
                 <label class="form-label required">Divisi</label>

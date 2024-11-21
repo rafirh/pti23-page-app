@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCoreTeamRequest;
 use App\Http\Requests\UpdateCoreTeamRequest;
 use App\Models\CoreTeam;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class CoreTeamController extends Controller
@@ -14,8 +15,10 @@ class CoreTeamController extends Controller
     {
         return view('dashboard.core-teams.index', [
             'title' => 'Daftar Pengurus Inti',
-            'coreTeams' => CoreTeam::options(request(CoreTeam::$allowedParams))
+            'coreTeams' => CoreTeam::with('workingPrograms', 'student')
+                ->options(request(CoreTeam::$allowedParams))
                 ->paginate($this->validateAndGetLimit(request('limit'), 10)),
+            'students' => Student::getStudentNotInCoreTeam(),
             'sortables' => CoreTeam::$sortables,
             'allowedParams' => CoreTeam::$allowedParams,
         ]);
@@ -33,6 +36,7 @@ class CoreTeamController extends Controller
         return view('dashboard.core-teams.edit', [
             'title' => 'Ubah Pengurus Inti',
             'coreTeam' => $coreTeam,
+            'students' => Student::getStudentNotInCoreTeam($coreTeam->student_id),
         ]);
     }
 

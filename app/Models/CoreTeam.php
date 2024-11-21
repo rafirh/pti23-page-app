@@ -38,7 +38,10 @@ class CoreTeam extends Model
     {
         if (isset($options['q'])) {
             $query->where(function ($query) use ($options) {
-                $query->where('position', 'like', '%' . $options['q'] . '%');
+                $query->where('position', 'like', '%' . $options['q'] . '%')
+                    ->orWhereHas('student', function ($query) use ($options) {
+                        $query->where('name', 'like', '%' . $options['q'] . '%');
+                    });
             });
         }
 

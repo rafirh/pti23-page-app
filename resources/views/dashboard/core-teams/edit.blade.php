@@ -44,6 +44,24 @@
             <div class="card-body">
               <div class="row mb-3">
                 <div class="col">
+                  <label class="form-label required">Mahasiswa</label>
+                  <select class="form-select @error('student_id') is-invalid @enderror" name="student_id">
+                    <option value="" disabled selected>Pilih</option>
+                    @foreach ($students as $student)
+                      <option value="{{ $student->id }}" {{ (old('student_id') ?? $coreTeam->student_id) == $student->id ? 'selected' : '' }}>
+                        {{ $student->name }}
+                      </option>
+                    @endforeach
+                  </select>
+                  @error('student_id')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
                   <label class="form-label required">Divisi</label>
                   <input type="text" class="form-control @error('position') is-invalid @enderror" name="position"
                     placeholder="Masukkan divisi" value="{{ old('position') ?? $coreTeam->position }}" />

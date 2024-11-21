@@ -87,6 +87,15 @@ class Student extends Model
         return $query;
     }
 
+    public static function getStudentNotInCoreTeam($exceptId = null)
+    {
+        return self::whereDoesntHave('coreTeam')
+            ->when($exceptId, function ($query) use ($exceptId) {
+                return $query->where('id', '!=', $exceptId);
+            })
+            ->get();
+    }
+
     public function lecturer()
     {
         return $this->belongsTo(Lecturer::class);
@@ -100,5 +109,10 @@ class Student extends Model
     public function achievements()
     {
         return $this->hasMany(Achievement::class, 'student_id');
+    }
+
+    public function coreTeam()
+    {
+        return $this->hasOne(CoreTeam::class, 'student_id');
     }
 }

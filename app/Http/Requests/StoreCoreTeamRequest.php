@@ -24,6 +24,7 @@ class StoreCoreTeamRequest extends FormRequest
         return [
             'position' => 'required|string|max:255',
             'order' => 'required|integer|min:1|unique:core_teams,order',
+            'student_id' => 'nullable|exists:students,id',
         ];
     }
 
@@ -42,6 +43,7 @@ class StoreCoreTeamRequest extends FormRequest
             'order.integer' => 'Urutan harus berupa angka.',
             'order.min' => 'Urutan harus lebih besar dari 0.',
             'order.unique' => 'Urutan sudah digunakan.',
+            'student_id.exists' => 'Mahasiswa tidak valid.',
         ];
     }
 }

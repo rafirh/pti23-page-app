@@ -153,10 +153,10 @@
                     <span class="input-icon-addon">
                       <img src="{{ asset('img/sosmed/linkedin.svg') }}" alt="Linkedin">
                     </span>
-                    <input type="text" class="form-control @error('linkedin_url') is-invalid @enderror"
-                      placeholder="Tautan linkedin" name="linkedin_url" value="{{ old('linkedin_url') ?? $student->linkedin_url }}">
+                    <input type="text" class="form-control @error('linkedin') is-invalid @enderror"
+                      placeholder="Tautan linkedin" name="linkedin" value="{{ old('linkedin') ?? $student->linkedin }}">
                   </div>
-                  @error('linkedin_url')
+                  @error('linkedin')
                     <span class="text-danger fs-5">
                       {{ $message }}
                     </span>
@@ -167,10 +167,10 @@
                     <span class="input-icon-addon">
                       <img src="{{ asset('img/sosmed/instagram.svg') }}" alt="Instagram">
                     </span>
-                    <input type="text" class="form-control @error('instagram_url') is-invalid @enderror"
-                      placeholder="Tautan instagram" name="instagram_url" value="{{ old('instagram_url') ?? $student->instagram_url }}">
+                    <input type="text" class="form-control @error('instagram') is-invalid @enderror"
+                      placeholder="Tautan instagram" name="instagram" value="{{ old('instagram') ?? $student->instagram }}">
                   </div>
-                  @error('instagram_url')
+                  @error('instagram')
                     <span class="text-danger fs-5">
                       {{ $message }}
                     </span>
@@ -181,10 +181,10 @@
                     <span class="input-icon-addon">
                       <img src="{{ asset('img/sosmed/github.svg') }}" alt="Github" style="width: 20px;">
                     </span>
-                    <input type="text" class="form-control @error('github_url') is-invalid @enderror"
-                      placeholder="Tautan github" name="github_url" value={{ old('github_url') ?? $student->github_url }}>
+                    <input type="text" class="form-control @error('github') is-invalid @enderror"
+                      placeholder="Tautan github" name="github" value={{ old('github') ?? $student->github }}>
                   </div>
-                  @error('github_url')
+                  @error('github')
                     <span class="text-danger fs-5">
                       {{ $message }}
                     </span>
@@ -195,10 +195,10 @@
                     <span class="input-icon-addon">
                       <img src="{{ asset('img/sosmed/twitter.svg') }}" alt="Twitter" style="width: 20px;">
                     </span>
-                    <input type="text" class="form-control @error('twitter_url') is-invalid @enderror"
-                      placeholder="Tautan twitter" name="twitter_url" value={{ old('twitter_url') ?? $student->twitter_url }}>
+                    <input type="text" class="form-control @error('twitter') is-invalid @enderror"
+                      placeholder="Tautan twitter" name="twitter" value={{ old('twitter') ?? $student->twitter }}>
                   </div>
-                  @error('twitter_url')
+                  @error('twitter')
                     <span class="text-danger fs-5">
                       {{ $message }}
                     </span>

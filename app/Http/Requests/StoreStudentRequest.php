@@ -30,6 +30,7 @@ class StoreStudentRequest extends FormRequest
             'instagram' => 'nullable|string|max:255',
             'linkedin' => 'nullable|string|max:255',
             'github' => 'nullable|string|max:255',
+            'twitter' => 'nullable|string|max:255',
             'photo' => 'nullable|image',
             'lecturer_id' => 'required|exists:lecturers,id',
             'organization_ids' => 'nullable|array',
