@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UserRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -14,6 +15,24 @@ class AuthController extends Controller
     public function index()
     {
         return view('auth.index');
+    }
+
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    public function store(UserRegisterRequest $request) {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'student'
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('user.dashboard.home.index');
     }
 
     public function authenticate(LoginRequest $request)

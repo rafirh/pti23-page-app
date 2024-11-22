@@ -30,6 +30,8 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::redirect('/', '/login');
+Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
+Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
     Route::get('/change-password', [AuthController::class, 'changePassword'])->name('auth.change-password');
