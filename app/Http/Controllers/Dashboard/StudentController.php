@@ -27,6 +27,14 @@ class StudentController extends Controller
         ]);
     }
 
+    public function show(Student $student)
+    {
+        return view('dashboard.students.show', [
+            'title' => 'Detail Mahasiswa',
+            'student' => $student,
+        ]);
+    }
+
     public function store(StoreStudentRequest $request)
     {
         $data = $request->validated();

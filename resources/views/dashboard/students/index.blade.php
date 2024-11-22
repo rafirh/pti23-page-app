@@ -199,7 +199,8 @@
                       </td>
                       <td class="text-muted">
                         @if ($student->email)
-                          <a href="mailto:{{ $student->email }}" class="text-decoration-none text-reset">
+                          <a href="mailto:{{ $student->email }}" class="text-decoration-none text-reset"
+                            target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                               stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail">
@@ -230,6 +231,20 @@
                             </svg>
                           </button>
                           <div class="text-muted dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="{{ route('admin.dashboard.students.show', $student->id) }}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-file-text me-2">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                <path d="M9 9l1 0" />
+                                <path d="M9 13l6 0" />
+                                <path d="M9 17l6 0" />
+                              </svg>
+                              Detail
+                            </a>
                             <a class="dropdown-item" href="{{ route('admin.dashboard.students.edit', $student->id) }}">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit me-2"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -565,7 +580,8 @@
                   @foreach ($organizations as $organization)
                     <label class="form-check form-check-inline">
                       <input class="form-check-input" type="checkbox" name="organization_ids[]"
-                        value="{{ $organization->id }}" {{ in_array($organization->id, old('organization_ids', [])) ? 'checked' : '' }}>
+                        value="{{ $organization->id }}"
+                        {{ in_array($organization->id, old('organization_ids', [])) ? 'checked' : '' }}>
                       <span class="form-check-label">{{ $organization->name }}</span>
                     </label>
                   @endforeach
