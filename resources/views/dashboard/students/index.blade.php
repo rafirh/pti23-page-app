@@ -69,8 +69,8 @@
         </div>
       </div>
       <div class="row g-2 align-items-center">
-        <div class="col-12 col-sm-8 col-md-6 col-xl-4 mt-3 d-flex">
-          <div class="input-group me-2">
+        <div class="col col-sm-8 col-md-6 col-xl-4 mt-3 d-flex">
+          <div class="input-group">
             <input type="text" class="form-control" placeholder="Cari ..." id="inputSearch"
               value="{{ request()->q }}">
             <button class="btn btn-icon" type="button" id="btnSearch">
@@ -83,7 +83,9 @@
               </svg>
             </button>
           </div>
-          <a href="#" class="btn btn-outline-primary btn-icon" data-bs-toggle="modal"
+        </div>
+        <div class="col-auto mt-3">
+          <a href="#" class="btn btn-outline-primary btn-icon me-1" data-bs-toggle="modal"
             data-bs-target="#modal-option">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-filter" width="24"
               height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -92,8 +94,6 @@
               <path d="M5.5 5h13a1 1 0 0 1 .5 1.5l-5 5.5l0 7l-4 -3l0 -4l-5 -5.5a1 1 0 0 1 .5 -1.5"></path>
             </svg>
           </a>
-        </div>
-        <div class="col-auto mt-3">
           @if (isParamsExist($allowedParams))
             <a href="{{ route('admin.dashboard.students.index') }}" class="btn btn-outline-danger btn-icon"
               data-bs-toggle="tooltip" data-bs-original-title="Bersihkan filter pencarian" data-bs-placement="bottom">

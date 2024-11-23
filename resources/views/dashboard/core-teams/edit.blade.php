@@ -47,6 +47,7 @@
                   <label class="form-label required">Mahasiswa</label>
                   <select class="form-select @error('student_id') is-invalid @enderror" name="student_id">
                     <option value="" disabled selected>Pilih</option>
+                    <option value="">Tidak ada</option>
                     @foreach ($students as $student)
                       <option value="{{ $student->id }}" {{ (old('student_id') ?? $coreTeam->student_id) == $student->id ? 'selected' : '' }}>
                         {{ $student->name }}

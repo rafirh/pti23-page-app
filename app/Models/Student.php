@@ -54,6 +54,7 @@ class Student extends Model
         'limit',
         'q',
         'sortby',
+        'order',
         'lecturer_id',
     ];
 

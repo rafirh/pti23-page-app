@@ -36,6 +36,7 @@ class WorkingProgram extends Model
         'limit',
         'q',
         'sortby',
+        'order',
     ];
 
     public function scopeOptions($query, $options)
