@@ -60,11 +60,11 @@ class CoreTeam extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id');
     }
 
     public function workingPrograms()
     {
-        return $this->hasMany(WorkingProgram::class);
+        return $this->hasMany(WorkingProgram::class, 'core_team_id');
     }
 }
