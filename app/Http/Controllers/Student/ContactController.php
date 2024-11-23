@@ -10,7 +10,7 @@ class ContactController extends Controller
     public function index()
     {
         return view('student.contact.index', [
-            'title' => 'Kontak',
+            'title' => 'Kontak PTI 2023',
         ]);
     }
 }

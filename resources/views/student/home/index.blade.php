@@ -10,7 +10,7 @@
       <div class="row row-cards" style="height: 80vh;">
         <div class="col-12 text-center" style="display: flex; justify-content: center; align-items: center;">
           <div style="font-size: 2rem;" class="fw-bold">
-            <div class="">PROFILE PTI 2023</div>
+            <div class="">PROFIL PTI 2023</div>
             <div class="">UNIVERSITAS BRAWIJAYA</div>
           </div>
         </div>
