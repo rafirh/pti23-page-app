@@ -66,7 +66,11 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('admin.dashboard.home.index');
+        if ($user->role == 'admin') {
+            return redirect()->route('admin.dashboard.home.index');
+        } else {
+            return redirect()->route('student.dashboard.home.index');
+        }
     }
 
     public function logout()

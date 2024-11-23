@@ -9,6 +9,8 @@ use App\Http\Controllers\Dashboard\OrganizationController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\WorkingProgramController;
+use App\Http\Controllers\Student\AboutController;
+use App\Http\Controllers\Student\HomeController as StudentHomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,7 +55,6 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin/dashboa
 });
 
 Route::group(['middleware' => ['auth', 'role:student'], 'prefix' => 'student/dashboard', 'as' => 'student.dashboard.'], function () {
-    Route::get('/home', function () {
-        return 'Welcome to Student Dashboard';
-    })->name('home.index');
+    Route::get('/home', [StudentHomeController::class, 'index'])->name('home.index');
+    Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 });
