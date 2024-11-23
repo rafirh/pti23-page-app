@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('user.dashboard.home.index');
+        return redirect()->route('student.dashboard.home.index');
     }
 
     public function authenticate(LoginRequest $request)
