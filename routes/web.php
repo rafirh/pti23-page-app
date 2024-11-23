@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\WorkingProgramController;
 use App\Http\Controllers\Student\AboutController;
+use App\Http\Controllers\Student\ContactController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
 use App\Http\Controllers\Student\StudentController as StudentStudentController;
 use Illuminate\Support\Facades\Route;
@@ -60,5 +61,5 @@ Route::group(['middleware' => ['auth', 'role:student'], 'prefix' => 'student/das
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
     Route::get('/students', [StudentStudentController::class, 'index'])->name('students.index');
     Route::get('/students/{student}', [StudentStudentController::class, 'show'])->name('students.show');
-    
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 });
